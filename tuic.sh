@@ -77,7 +77,7 @@ check_tuic_server() {
 generate_config() {
 cat > "$SERVER_TOML" <<EOF
 log_level = "warn"
-server = "104.21.87.226:${TUIC_PORT}"
+server = "0.0.0.0:${TUIC_PORT}"
 
 udp_relay_ipv6 = false
 zero_rtt_handshake = true
@@ -97,7 +97,7 @@ private_key = "$KEY_PEM"
 alpn = ["h3"]
 
 [restful]
-addr = "104.21.87.226:${TUIC_PORT}"
+addr = "127.0.0.1:${TUIC_PORT}"
 secret = "$(openssl rand -hex 16)"
 maximum_clients_per_user = 999999999
 
@@ -128,7 +128,7 @@ get_server_ip() {
     return
   fi
 
-  echo "104.21.87.226"
+  echo "127.0.0.1"
 }
 
 # ========== 生成TUIC链接 ==========
@@ -172,6 +172,4 @@ main() {
 }
 
 main "$@"
-
-
 

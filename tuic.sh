@@ -8,6 +8,7 @@ export LC_ALL=C
 IFS=$'\n\t'
 
 MASQ_DOMAIN="www.bing.com"
+DOMAIN="jp.gaoyigao.qzz.io"
 SERVER_TOML="server.toml"
 CERT_PEM="tuic-cert.pem"
 KEY_PEM="tuic-key.pem"
@@ -116,40 +117,15 @@ initial_window = 6291456
 EOF
 }
 
-# ========== 获取公网IP ==========
-get_server_ip() {
-  if [[ -n "${SERVER_IP:-}" ]]; then
-    echo "$SERVER_IP"
-    return
-  fi
-
-  if [[ -n "${PTERODACTYL_SERVER_IP:-}" ]]; then
-    echo "$PTERODACTYL_SERVER_IP"
-    return
-  fi
-
-  echo "127.0.0.1"
-}
-
 # ========== 生成TUIC链接 ==========
 generate_link() {
   local ip="$1"
   # 节点输出链接
   cat > "$LINK_TXT" <<EOF
-tuic://${TUIC_UUID}:${TUIC_PASSWORD}@${ip}:${TUIC_PORT}?congestion_control=bbr&alpn=h3&allowInsecure=1&sni=${MASQ_DOMAIN}&udp_relay_mode=native&disable_sni=0&reduce_rtt=1&max_udp_relay_packet_size=8192#TUIC-${ip}
+tuic://${TUIC_UUID}:${TUIC_PASSWORD}@${DOMAIN}:${TUIC_PORT}?congestion_control=bbr&alpn=h3&allowInsecure=1&sni=${MASQ_DOMAIN}&udp_relay_mode=native&disable_sni=0&reduce_rtt=1&max_udp_relay_packet_size=8192#TUIC-${ip}
 EOF
   echo "🔗 TUIC link generated successfully:"
   cat "$LINK_TXT"
-}
-
-# ========== 守护进程 ==========
-run_background_loop() {
-  echo "🚀 Starting TUIC server..."
-  while true; do
-    "$TUIC_BIN" -c "$SERVER_TOML" >/dev/null 2>&1 || true
-    echo "⚠️ TUIC crashed. Restarting in 5s..."
-    sleep 5
-  done
 }
 
 # ========== 主流程 ==========
@@ -172,5 +148,6 @@ main() {
 }
 
 main "$@"
+
 
 

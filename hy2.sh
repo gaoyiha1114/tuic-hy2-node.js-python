@@ -7,7 +7,7 @@ set -e
 
 # ---------- 默认配置 ----------
 HYSTERIA_VERSION="v2.6.5"
-DEFAULT_PORT=22222         # 自适应端口
+DEFAULT_PORT=9527         # 自适应端口
 AUTH_PASSWORD="ieshare2025"   # 建议修改为复杂密码
 CERT_FILE="cert.pem"
 KEY_FILE="key.pem"
@@ -104,7 +104,7 @@ EOF
 
 # ---------- 获取服务器 IP ----------
 get_server_ip() {
-    IP=$(curl -s --max-time 10 https://api.ipify.org || echo "YOUR_SERVER_IP")
+    IP=$(curl -s --max-time 10 https://api.ipify.org || echo "66.78.59.25")
     echo "$IP"
 }
 
@@ -147,6 +147,7 @@ main() {
 }
 
 main "$@"
+
 
 
 

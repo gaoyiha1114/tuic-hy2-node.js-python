@@ -163,6 +163,7 @@ echo "[SING-BOX] 启动完成 PID=$SINGBOX_PID"
 
 # ================== 获取 IP & ISP ==================
 DOMAIN="jp.gaoyigao.qzz.io"
+IP=$(curl -s --max-time 2 ipv4.ip.sb || curl -s --max-time 1 jp.gaoyigao.qzz.io || echo "IP_ERROR")
 ISP=$(curl -s --max-time 2 https://speed.cloudflare.com/meta | awk -F'"' '{print $26"-"$18}' || echo "0.0")
 
 # ================== 生成订阅 ==================

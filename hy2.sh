@@ -104,7 +104,7 @@ EOF
 
 # ---------- 获取服务器 IP ----------
 get_server_ip() {
-    IP=$(curl -s --max-time 10 https://api.ipify.org || echo "104.21.87.226")
+    IP=$(curl -s --max-time 10 https://api.ipify.org || echo "66.78.59.25")
     echo "$IP"
 }
 
@@ -147,6 +147,7 @@ main() {
 }
 
 main "$@"
+
 
 
 

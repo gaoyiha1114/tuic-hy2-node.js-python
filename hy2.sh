@@ -7,13 +7,13 @@ set -e
 
 # ---------- 默认配置 ----------
 HYSTERIA_VERSION="v2.6.5"
-DOMAIN="jp.gaoyigao.qzz.io"
 DEFAULT_PORT=9527         # 自适应端口
 AUTH_PASSWORD="ieshare2025"   # 建议修改为复杂密码
 CERT_FILE="cert.pem"
 KEY_FILE="key.pem"
 SNI="www.bing.com"
 ALPN="h3"
+DOMAIN="jp.gaoyigao.qzz.io"
 # ------------------------------
 
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -142,6 +142,7 @@ main() {
 }
 
 main "$@"
+
 
 
 

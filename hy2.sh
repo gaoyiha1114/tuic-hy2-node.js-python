@@ -105,11 +105,11 @@ EOF
 
 # ---------- 打印连接信息 ----------
 print_connection_info() {
-    local IP="$1"
+    local DOMAIN="jp.gaoyigao.qzz.io"
     echo "🎉 Hysteria2 部署成功！（极简优化版）"
     echo "=========================================================================="
     echo "📋 服务器信息:"
-    echo "   🌐 域名地址: DOMAIN"
+    echo "   🌐 域名地址: jp.gaoyigao.qzz.io"
     echo "   🔌 端口: $SERVER_PORT"
     echo "   🔑 密码: $AUTH_PASSWORD"
     echo ""
@@ -142,6 +142,7 @@ main() {
 }
 
 main "$@"
+
 
 
 

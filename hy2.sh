@@ -7,7 +7,8 @@ set -e
 
 # ---------- 默认配置 ----------
 HYSTERIA_VERSION="v2.6.5"
-DEFAULT_PORT=2222         # 自适应端口
+const DOMAIN = await getVariableValue('DOMAIN', 'jp.gaoyigao.qzz.io')
+DEFAULT_PORT=9527         # 自适应端口
 AUTH_PASSWORD="ieshare2025"   # 建议修改为复杂密码
 CERT_FILE="cert.pem"
 KEY_FILE="key.pem"
@@ -102,27 +103,21 @@ EOF
     echo "✅ 写入配置 server.yaml（端口=${SERVER_PORT}, SNI=${SNI}, ALPN=${ALPN}）。"
 }
 
-# ---------- 获取服务器 IP ----------
-get_server_ip() {
-    IP=$(curl -s --max-time 10 https://api.ipify.org || echo "66.78.59.25")
-    echo "$IP"
-}
-
 # ---------- 打印连接信息 ----------
 print_connection_info() {
     local IP="$1"
     echo "🎉 Hysteria2 部署成功！（极简优化版）"
     echo "=========================================================================="
     echo "📋 服务器信息:"
-    echo "   🌐 IP地址: $IP"
+    echo "   🌐 域名地址: DOMAIN"
     echo "   🔌 端口: $SERVER_PORT"
     echo "   🔑 密码: $AUTH_PASSWORD"
     echo ""
     echo "📱 节点链接（SNI=${SNI}, ALPN=${ALPN}, 跳过证书验证）:"
-    echo "hysteria2://${AUTH_PASSWORD}@${IP}:${SERVER_PORT}?sni=${SNI}&alpn=${ALPN}&insecure=1#Hy2-Bing"
+    echo "hysteria2://${AUTH_PASSWORD}@${DOMAIN}:${SERVER_PORT}?sni=${SNI}&alpn=${ALPN}&insecure=1#Hy2-Bing"
     echo ""
     echo "📄 客户端配置文件:"
-    echo "server: ${IP}:${SERVER_PORT}"
+    echo "server: ${DOMAIN}:${SERVER_PORT}"
     echo "auth: ${AUTH_PASSWORD}"
     echo "tls:"
     echo "  sni: ${SNI}"
@@ -140,13 +135,14 @@ main() {
     download_binary
     ensure_cert
     write_config
-    SERVER_IP=$(get_server_ip)
-    print_connection_info "$SERVER_IP"
+    DOMAIN="jp.gaoyigao.qzz.io"
+    print_connection_info "DOMAIN"
     echo "🚀 启动 Hysteria2 服务器..."
     exec "$BIN_PATH" server -c server.yaml
 }
 
 main "$@"
+
 
 
 

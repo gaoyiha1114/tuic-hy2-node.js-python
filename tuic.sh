@@ -118,8 +118,17 @@ EOF
 
 # ========== 获取公网IP ==========
 get_server_ip() {
-    IP=$(curl -s --max-time 10 https://api.ipify.org || echo "YOUR_SERVER_IP")
-    echo "$IP"
+  if [[ -n "${SERVER_IP:-}" ]]; then
+    echo "$SERVER_IP"
+    return
+  fi
+
+  if [[ -n "${PTERODACTYL_SERVER_IP:-}" ]]; then
+    echo "$PTERODACTYL_SERVER_IP"
+    return
+  fi
+
+  echo "140.245.106.217"
 }
 
 # ========== 生成TUIC链接 ==========
@@ -163,7 +172,4 @@ main() {
 }
 
 main "$@"
-
-
-
 
